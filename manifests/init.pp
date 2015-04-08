@@ -32,6 +32,8 @@ class wingid (
         $venv_path,
     ) {
 
+    $docroot = '/var/www/wingid'
+
     file { $site_root:
         ensure => present,
     }
@@ -69,8 +71,15 @@ class wingid (
         purge_configs => true,
     }
 
+    file { $docroot:
+        ensure => directory,
+        owner => 'www-data',
+        group => 'www-data',
+    }
+
     # Set up the virtual host.
     apache::vhost { $domain:
+        docroot => $docroot,
         port => '80',
         aliases => [
             { alias => '/media/', path => "${site_root}/media/" },
