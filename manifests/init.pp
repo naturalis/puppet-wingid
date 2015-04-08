@@ -5,6 +5,8 @@
 # == Parameters:
 #
 # $domain::     Specifies the server name for the virtual host.
+# $doc_root::   Specifies the virtual host's document root. $site_root may not
+#               be contained in this directory.
 # $site_root::  Specifies the path to the root of the Django site.
 # $site_name::  Specifies the name of the Django site. This is the name of the
 #               directory containing the site's settings.py.
@@ -20,19 +22,19 @@
 #
 #   class {'wingid':
 #     domain => 'wing-id.naturalis.nl',
-#     site_root => '/srv/www/wingid/htdocs',
+#     doc_root => '/var/www/wingid',
+#     site_root => '/opt/wingid/django',
 #     site_name => 'mysite',
-#     venv_path => '/srv/www/wingid/htdocs/env',
+#     venv_path => '/opt/wingid/django/env',
 #   }
 #
 class wingid (
         $domain = 'wing-id.naturalis.nl',
+        $doc_root = '/var/www/wingid',
         $site_root,
         $site_name,
         $venv_path,
     ) {
-
-    $docroot = '/var/www/wingid/html'
 
     package { 'python-numpy':
         ensure => present,
@@ -67,7 +69,7 @@ class wingid (
 
     # This directory must be empty and is used as the document root. The Django
     # site may not be within this directory.
-    file { $docroot:
+    file { $doc_root:
         ensure => directory,
         owner => 'www-data',
         group => 'www-data',
@@ -76,7 +78,7 @@ class wingid (
     # Set up the virtual host.
     apache::vhost { $domain:
         require => File[$docroot],
-        docroot => $docroot,
+        docroot => $doc_root,
         port => '80',
         aliases => [
             { alias => '/media/', path => "${site_root}/media/" },
