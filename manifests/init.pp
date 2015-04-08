@@ -32,7 +32,7 @@ class wingid (
         $venv_path,
     ) {
 
-    $docroot = '/var/www/wingid'
+    $docroot = '/var/www/wingid/html'
 
     package { 'python-numpy':
         ensure => present,
@@ -47,13 +47,8 @@ class wingid (
         gunicorn   => false,
     }
 
-    file { $site_root:
-        ensure => present,
-    }
-
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
-        require      => File[$site_root],
         ensure       => present,
         version      => 'system',
         requirements => "${site_root}/wingid/requirements.txt",
@@ -70,6 +65,8 @@ class wingid (
         purge_configs => true,
     }
 
+    # This directory must be empty and is used as the document root. The Django
+    # site may not be within this directory.
     file { $docroot:
         ensure => directory,
         owner => 'www-data',
