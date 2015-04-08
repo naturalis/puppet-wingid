@@ -77,7 +77,7 @@ class wingid (
 
     # Set up the virtual host.
     apache::vhost { $domain:
-        require => File[$docroot],
+        require => File[$doc_root],
         docroot => $doc_root,
         port => '80',
         aliases => [
