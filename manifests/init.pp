@@ -34,10 +34,6 @@ class wingid (
 
     $docroot = '/var/www/wingid'
 
-    file { $site_root:
-        ensure => present,
-    }
-
     package { 'python-numpy':
         ensure => present,
     }
@@ -51,15 +47,18 @@ class wingid (
         gunicorn   => false,
     }
 
+    file { $site_root:
+        ensure => present,
+    }
+
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
+        require      => File[$site_root],
         ensure       => present,
         version      => 'system',
         requirements => "${site_root}/wingid/requirements.txt",
         systempkgs   => true,
         distribute   => true,
-        owner        => 'www-data',
-        group        => 'www-data',
         timeout      => 0,
     }
 
@@ -79,6 +78,7 @@ class wingid (
 
     # Set up the virtual host.
     apache::vhost { $domain:
+        require => File[$docroot],
         docroot => $docroot,
         port => '80',
         aliases => [
