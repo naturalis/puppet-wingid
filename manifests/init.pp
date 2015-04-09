@@ -36,15 +36,37 @@ class wingid (
         $venv_path,
     ) {
 
+    # Construct paths.
     $media_path = "${site_root}/media/"
     $static_admin_path = "${site_root}/${site_name}/static/admin/"
     $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
     $static_path = "${site_root}/wingid/static/"
 
+    # Install packages.
     package {
         'python-numpy': ensure => present;
         'python-pil': ensure => present;
         'python-memcache': ensure => present;
+    }
+
+    # Directories and symbolic links.
+    file {
+        $doc_root:
+            ensure => directory,
+            owner => 'www-data',
+            group => 'www-data';
+        $media_path:
+            ensure => directory,
+            owner => 'www-data',
+            group => 'www-data';
+        "${site_root}/${site_name}/static/":
+            ensure => directory;
+        $static_admin_path:
+            ensure => link,
+            target => "${venv_path}/lib/python2.7/site-packages/django/contrib/admin/static/admin/";
+        $static_rest_path:
+            ensure => link,
+            target => "${venv_path}/lib/python2.7/site-packages/rest_framework/static/rest_framework/";
     }
 
     # Install Python and friends.
@@ -63,7 +85,6 @@ class wingid (
         requirements => "${site_root}/wingid/requirements.txt",
         systempkgs   => true,
         distribute   => true,
-        timeout      => 0,
     }
 
     # Install and configure Apache.
@@ -73,14 +94,6 @@ class wingid (
         default_mods => true,
         default_confd_files => true,
         purge_configs => true,
-    }
-
-    # This directory must be empty and is used as the document root. The Django
-    # site may not be within this directory.
-    file { $doc_root:
-        ensure => directory,
-        owner => 'www-data',
-        group => 'www-data',
     }
 
     # Set up the virtual host.
