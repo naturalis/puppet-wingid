@@ -19,6 +19,7 @@
 #
 # - puppetlabs-apache
 # - stankevich-python
+# - saz-memcached
 #
 # == Sample Usage:
 #
@@ -46,16 +47,26 @@ class wingid (
     $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
     $static_path = "${site_root}/wingid/static/"
 
-    # R >= 3.1.0 is required, so install it from CRAN.
-    class { 'wingid::cran':
-        mirror => $cran_mirror,
+    class {
+        # Geomorph requires R >= 3.1.0; install R and the geomorph package from
+        # CRAN because Ubuntu comes with an older R version.
+        'wingid::cran':
+            mirror => $cran_mirror;
+
+        # Install memcached; required for sorl-thumbnail.
+        'memcached':
+            ;
     }
 
     # Install packages.
     package {
-        'python-numpy': ensure => present;
-        'python-pil': ensure => present;
-        'python-memcache': ensure => present;
+        'python-numpy':
+            ensure => present;
+        'python-pil':
+            ensure => present;
+        'python-memcache':
+            ensure => present,
+            require => Class['memcached'];
     }
 
     # Directories and symbolic links.
