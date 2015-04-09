@@ -19,7 +19,6 @@
 #
 # - puppetlabs-apache
 # - stankevich-python
-# - saz-memcached
 #
 # == Sample Usage:
 #
@@ -52,10 +51,6 @@ class wingid (
         # CRAN because Ubuntu comes with an older R version.
         'wingid::cran':
             mirror => $cran_mirror;
-
-        # Install memcached; required for sorl-thumbnail.
-        'memcached':
-            ;
     }
 
     # Install packages.
@@ -64,9 +59,10 @@ class wingid (
             ensure => present;
         'python-pil':
             ensure => present;
+        'memcached':
+            ensure => present;
         'python-memcache':
-            ensure => present,
-            require => Class['memcached'];
+            ensure => present;
     }
 
     # Directories and symbolic links.
@@ -100,7 +96,13 @@ class wingid (
 
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
-        require      => Class['wingid::cran'],
+        require      => [
+            Class['wingid::cran'],
+            Package['python-numpy'],
+            Package['python-pil'],
+            Package['memcached'],
+            Package['python-memcache'],
+        ],
         ensure       => present,
         version      => 'system',
         requirements => "${site_root}/wingid/requirements.txt",
