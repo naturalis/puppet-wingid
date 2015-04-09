@@ -57,7 +57,8 @@ class wingid::cran (
     }
 
     # Install R packages that cannot be installed from the CRAN Ubuntu
-    # repository.
+    # repository. These are obtained directly from CRAN and may need to be
+    # compiled.
     r::package {
         'geomorph':
             repo => $mirror,

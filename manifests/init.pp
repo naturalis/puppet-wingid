@@ -4,14 +4,16 @@
 #
 # == Parameters:
 #
-# $domain::     Specifies the server name for the virtual host.
-# $doc_root::   Specifies the virtual host's document root. $site_root may not
-#               be contained in this directory.
-# $site_root::  Specifies the path to the root of the Django site.
-# $site_name::  Specifies the name of the Django site. This is the name of the
-#               directory containing the site's settings.py.
-# $venv_path::  Specifies the path to the Python virtualenv directory where all
-#               requirements are installed.
+# $domain::         Specifies the server name for the virtual host.
+# $doc_root::       Specifies the virtual host's document root. $site_root may
+#                   not be contained in this directory.
+# $site_root::      Specifies the path to the root of the Django site.
+# $site_name::      Specifies the name of the Django site. This is the name of
+#                   the directory containing the site's settings.py.
+# $venv_path::      Specifies the path to the Python virtualenv directory where
+#                   all requirements are installed.
+# $cran_mirror::    Specifies the URL of your favorite CRAN mirror.
+#                   See http://cran.r-project.org/mirrors.html
 #
 # == Requires:
 #
