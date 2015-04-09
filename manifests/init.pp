@@ -65,6 +65,15 @@ class wingid (
             ensure => present;
     }
 
+    exec {
+        # Create the SQLite database for WingID.
+        'wingid_migrate':
+            require => Python::Virtualenv[$venv_path],
+            command => "${venv_path}/bin/python manage.py migrate",
+            cwd     => $site_root,
+            creates => "${site_root}/db.sqlite3";
+    }
+
     # Directories and symbolic links.
     file {
         $doc_root:

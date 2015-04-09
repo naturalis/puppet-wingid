@@ -38,8 +38,8 @@ class wingid::cran (
 
     # Udate the repositories after CRAN source was added.
     exec { 'apt_update_cran':
-        command => "/usr/bin/apt-get update",
         require => Apt::Source['cran'],
+        command => "/usr/bin/apt-get update",
         onlyif => '/usr/bin/R -q -e "getRversion() >= \'3.1.0\'" | grep FALSE'
     }
 
@@ -60,11 +60,13 @@ class wingid::cran (
     # Install R packages that cannot be installed from the CRAN Ubuntu
     # repository. These are obtained directly from CRAN and may need to be
     # compiled.
-    r::package {
-        'geomorph':
-            repo => $mirror,
-            dependencies => true,
-            require => [Package['r-base'], Package['build-essential']];
+    r::package { 'geomorph':
+        require => [
+            Package['r-base'],
+            Package['build-essential']
+        ],
+        repo => $mirror,
+        dependencies => true,
     }
 
 }
