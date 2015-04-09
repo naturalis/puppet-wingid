@@ -37,14 +37,14 @@ class wingid::cran (
     }
 
     # Udate the repositories after CRAN source was added.
-    exec { 'apt_update':
+    exec { 'apt_update_cran':
         command => "/usr/bin/apt-get update",
         require => Apt::Source['cran'],
     }
 
     # Install R. This installs the r-base package.
     class { 'r':
-        require => Exec['apt_update']
+        require => Exec['apt_update_cran']
     }
 
     # Install R packages from the repository.
