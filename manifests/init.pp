@@ -36,6 +36,11 @@ class wingid (
         $venv_path,
     ) {
 
+    $media_path = "${site_root}/media/"
+    $static_admin_path = "${site_root}/${site_name}/static/admin/"
+    $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
+    $static_path = "${site_root}/wingid/static/"
+
     package {
         'python-numpy': ensure => present;
         'python-pil': ensure => present;
@@ -84,10 +89,36 @@ class wingid (
         docroot => $doc_root,
         port => '80',
         aliases => [
-            { alias => '/media/', path => "${site_root}/media/" },
-            { alias => '/static/admin/', path => "${site_root}/${site_name}/static/admin/" },
-            { alias => '/static/rest_framework/', path => "${site_root}/${site_name}/static/rest_framework/" },
-            { alias => '/static/', path => "${site_root}/wingid/static/" },
+            { alias => '/media/', path => $media_path },
+            { alias => '/static/admin/', path => $static_admin_path },
+            { alias => '/static/rest_framework/', path => $static_rest_path },
+            { alias => '/static/', path => $static_path },
+        ],
+        directories => [
+            {
+                'path'     => $doc_root,
+                'provider' => 'directory',
+            },
+            {
+                'path'     => $media_path,
+                'provider' => 'directory',
+            },
+            {
+                'path'     => $static_admin_path,
+                'provider' => 'directory',
+            },
+            {
+                'path'     => $static_rest_path,
+                'provider' => 'directory',
+            },
+            {
+                'path'     => $static_path,
+                'provider' => 'directory',
+            },
+            {
+                'path'     => "${site_root}/${site_name}/wsgi.py",
+                'provider' => 'files',
+            },
         ],
 
         # Configure WSGI.
