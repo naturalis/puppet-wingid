@@ -10,6 +10,7 @@
 # == Requires:
 #
 # - puppetlabs-apt
+# - sessionm-puppet_r
 #
 # == Sample Usage:
 #
@@ -47,8 +48,8 @@ class wingid::r (
     }
 
     # Install R packages.
-    cran::package{'rgl': ensure => present}
-    cran::package{'mass': ensure => present}
-    cran::package{'geomorph': ensure => present}
+    ::r::package { 'rgl': dependencies => true }
+    ::r::package { 'mass': dependencies => true }
+    ::r::package { 'geomorph': dependencies => true }
 
 }
