@@ -50,11 +50,20 @@ class wingid::cran (
 
     # Install R packages from the CRAN Ubuntu repository.
     package {
-        'build-essential': ensure => present;
-        'r-base-dev': ensure => latest, require => Package['r-base'];
-        'r-recommended': ensure => latest, require => Package['r-base'];
-        'r-cran-rgl': ensure => present, require => Package['r-base'];
-        'r-cran-mass': ensure => present, require => Package['r-base'];
+        'build-essential':
+            ensure => present;
+        'r-base-dev':
+            ensure => latest,
+            require => Class['r'];
+        'r-recommended':
+            ensure => latest,
+            require => Class['r'];
+        'r-cran-rgl':
+            ensure => present,
+            require => Class['r'];
+        'r-cran-mass':
+            ensure => present,
+            require => Class['r'];
     }
 
     # Install R packages that cannot be installed from the CRAN Ubuntu
@@ -62,7 +71,7 @@ class wingid::cran (
     # compiled.
     r::package { 'geomorph':
         require => [
-            Package['r-base'],
+            Class['r'],
             Package['build-essential']
         ],
         repo => $mirror,
