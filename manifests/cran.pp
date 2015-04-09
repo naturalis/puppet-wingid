@@ -44,6 +44,7 @@ class wingid::cran (
     # Install R packages from the CRAN Ubuntu repository.
     package {
         'build-essential':
+            require => Exec['apt_update'],
             ensure => present;
         'r-base-dev':
             ensure => latest,
