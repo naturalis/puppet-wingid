@@ -21,6 +21,7 @@
 #
 # == Requires:
 #
+# - puppetlabs-apt
 # - puppetlabs-apache
 # - stankevich-python
 #
@@ -54,18 +55,41 @@ class wingid (
         # Geomorph requires R >= 3.1.0; install R and the geomorph package from
         # CRAN because Ubuntu comes with an older R version.
         'wingid::cran':
+            require => Exec['apt_update'],
             mirror => $cran_mirror;
+
+        # Install Python and friends.
+        'python':
+            require    => Exec['apt_update'],
+            version    => 'system',
+            pip        => true,
+            dev        => true,
+            virtualenv => true,
+            gunicorn   => false;
+
+        # Install Apache.
+        'apache':
+            require             => Exec['apt_update'],
+            package_ensure      => present,
+            default_vhost       => false,
+            default_mods        => true,
+            default_confd_files => true,
+            purge_configs       => true;
     }
 
     # Install packages.
     package {
         'python-numpy':
+            require => Exec['apt_update'],
             ensure => present;
         'python-pil':
+            require => Exec['apt_update'],
             ensure => present;
         'memcached':
+            require => Exec['apt_update'],
             ensure => present;
         'python-memcache':
+            require => Exec['apt_update'],
             ensure => present;
     }
 
@@ -113,15 +137,6 @@ class wingid (
             group => 'www-data';
     }
 
-    # Install Python and friends.
-    class { 'python' :
-        version    => 'system',
-        pip        => true,
-        dev        => true,
-        virtualenv => true,
-        gunicorn   => false,
-    }
-
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
         require      => [
@@ -136,15 +151,6 @@ class wingid (
         requirements => "${site_root}/wingid/requirements.txt",
         systempkgs   => true,
         distribute   => true,
-    }
-
-    # Install and configure Apache.
-    class { 'apache':
-        package_ensure => present,
-        default_vhost => false,
-        default_mods => true,
-        default_confd_files => true,
-        purge_configs => true,
     }
 
     # Set up the virtual host.
