@@ -1,5 +1,5 @@
-class {'wingid':
-    domain => 'wing-id.naturalis.nl',
+class { 'wingid' :
+    domain => 'wingid.example.com',
     doc_root => '/var/www/wingid',
     site_root => '/opt/wingid/django',
     site_name => 'mysite',

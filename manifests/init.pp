@@ -1,19 +1,23 @@
 # = Class: wingid
 #
-# This class installs an Apache Virtual Host for the WingID Django app.
+# This module configures an Ubuntu server for serving WingID.
 #
 # == Parameters:
 #
-# $domain::         Specifies the server name for the virtual host.
+# $domain::         Specifies the server name that will be used for the virtual
+#                   host.
 # $doc_root::       Specifies the virtual host's document root. $site_root may
 #                   not be contained in this directory.
-# $site_root::      Specifies the path to the root of the Django site.
-# $site_name::      Specifies the name of the Django site. This is the name of
-#                   the directory containing the site's settings.py.
+# $site_root::      Specifies the path to the root of the existing Django site.
+#                   The Django site must be created manually before triggering
+#                   Puppet with this class.
+# $site_name::      Specifies the name of the existing Django site. This is the
+#                   name of the directory containing the site's settings.py.
 # $venv_path::      Specifies the path to the Python virtualenv directory where
-#                   all requirements are installed.
+#                   all requirements will be installed.
 # $cran_mirror::    Specifies the URL of your favorite CRAN mirror.
-#                   See http://cran.r-project.org/mirrors.html
+#                   See http://cran.r-project.org/mirrors.html. Used to install
+#                   the latest R and required R packages.
 #
 # == Requires:
 #
