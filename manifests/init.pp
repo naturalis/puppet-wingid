@@ -43,7 +43,7 @@ class wingid (
     $static_path = "${site_root}/wingid/static/"
 
     # R >= 3.1.0 is required, so install it from CRAN.
-    class {'wingid::r':
+    class {'wingid::cran':
         mirror => 'http://cran-mirror.cs.uu.nl',
     }
 
