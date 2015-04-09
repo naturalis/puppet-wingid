@@ -28,6 +28,11 @@ settings in `django/website/settings.py`:
     TEMPLATE_DEBUG = False
     ALLOWED_HOSTS = ['wingid.example.com']
 
+## Install
+
+To install this Puppet module, clone this repository in `/etc/puppet/modules/`
+and rename the directory to "wingid" (i.e. `mv puppet-wingid wingid`).
+
 ## How to use
 
 Put the following code in a Puppet manifest (e.g. `wingid.pp` or `site.pp`):
