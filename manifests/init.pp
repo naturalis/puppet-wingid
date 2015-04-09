@@ -49,7 +49,6 @@ class wingid (
 
     # Install packages.
     package {
-        'build-essential': ensure => present;
         'python-numpy': ensure => present;
         'python-pil': ensure => present;
         'python-memcache': ensure => present;
@@ -86,6 +85,7 @@ class wingid (
 
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
+        require      => Wingid::Cran,
         ensure       => present,
         version      => 'system',
         requirements => "${site_root}/wingid/requirements.txt",
