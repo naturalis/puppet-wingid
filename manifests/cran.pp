@@ -40,6 +40,7 @@ class wingid::cran (
     exec { 'apt_update_cran':
         command => "/usr/bin/apt-get update",
         require => Apt::Source['cran'],
+        onlyif => '/usr/bin/R -q -e "getRversion() >= \'3.1.0\'" | grep TRUE'
     }
 
     # Install R. This installs the r-base package.
