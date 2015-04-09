@@ -130,7 +130,10 @@ class wingid (
 
     # Set up the virtual host.
     apache::vhost { $domain:
-        require => File[$doc_root],
+        require => [
+            File[$doc_root],
+            Exec['wingid_migrate'],
+        ],
         docroot => $doc_root,
         port => '80',
         aliases => [
