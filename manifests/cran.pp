@@ -47,23 +47,18 @@ class wingid::cran (
         require => Exec['apt_update_cran']
     }
 
-    # Install R packages from the repository.
+    # Install R packages from the CRAN Ubuntu repository.
     package {
         'build-essential': ensure => present;
         'r-base-dev': ensure => latest, require => Package['r-base'];
         'r-recommended': ensure => latest, require => Package['r-base'];
+        'r-cran-rgl': ensure => present, require => Package['r-base'];
+        'r-cran-mass': ensure => present, require => Package['r-base'];
     }
 
-    # Install R packages from CRAN.
+    # Install R packages that cannot be installed from the CRAN Ubuntu
+    # repository.
     r::package {
-        'rgl':
-            repo => $mirror,
-            dependencies => true,
-            require => [Package['r-base'], Package['build-essential']];
-        'mass':
-            repo => $mirror,
-            dependencies => true,
-            require => [Package['r-base'], Package['build-essential']];
         'geomorph':
             repo => $mirror,
             dependencies => true,
