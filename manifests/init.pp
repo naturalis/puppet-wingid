@@ -43,7 +43,7 @@ class wingid (
     $static_path = "${site_root}/wingid/static/"
 
     # R >= 3.1.0 is required, so install it from CRAN.
-    class {'wingid::cran':
+    class { 'wingid::cran':
         mirror => 'http://cran-mirror.cs.uu.nl',
     }
 
@@ -85,7 +85,7 @@ class wingid (
 
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
-        require      => Wingid::Cran,
+        require      => Class['wingid::cran'],
         ensure       => present,
         version      => 'system',
         requirements => "${site_root}/wingid/requirements.txt",
