@@ -42,6 +42,11 @@ class wingid (
     $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
     $static_path = "${site_root}/wingid/static/"
 
+    # R >= 3.1.0 is required, so install it from CRAN.
+    class {'wingid::r':
+        mirror => 'http://cran-mirror.cs.uu.nl',
+    }
+
     # Install packages.
     package {
         'python-numpy': ensure => present;
