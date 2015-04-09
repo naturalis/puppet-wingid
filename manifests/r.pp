@@ -33,13 +33,13 @@ class wingid::r (
         key_server        => "keyserver.ubuntu.com",
         pin               => "1000",
         include_src       => false
-	}
+    }
 
     exec { "apt-get update":
         command => "apt-get update",
     }
 
-	package {
+    package {
         "r-base": ensure => latest;
         "r-base-dev": ensure => latest;
         "r-recommended": ensure => latest;
