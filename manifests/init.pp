@@ -49,6 +49,7 @@ class wingid (
 
     # Install packages.
     package {
+        'build-essential': ensure => present;
         'python-numpy': ensure => present;
         'python-pil': ensure => present;
         'python-memcache': ensure => present;
