@@ -36,16 +36,9 @@ class wingid::cran (
         include_src       => false
     }
 
-    # Udate the repositories after CRAN source was added.
-    exec { 'apt_update_cran':
-        require => Apt::Source['cran'],
-        command => "/usr/bin/apt-get update",
-        #unless => '/usr/bin/R -q -e "getRversion() >= \'3.1.0\'" | grep TRUE'
-    }
-
-    # Install R. This installs the r-base package.
+    # Install R.
     class { 'r':
-        require => Exec['apt_update_cran']
+        require => Apt::Source['cran']
     }
 
     # Install R packages from the CRAN Ubuntu repository.
