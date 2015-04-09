@@ -1,6 +1,6 @@
-# = Class: wingid
+# = Class: wingid::r
 #
-# This class installs R and several required packages from CRAN.
+# This class installs R from CRAN and the required R packages for WingID.
 #
 # == Parameters:
 #
