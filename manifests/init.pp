@@ -55,7 +55,6 @@ class wingid (
         # Geomorph requires R >= 3.1.0; install R and the geomorph package from
         # CRAN because Ubuntu comes with an older R version.
         'wingid::cran':
-            require => Exec['apt_update'],
             mirror => $cran_mirror;
 
         # Install Python and friends.
