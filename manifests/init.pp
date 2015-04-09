@@ -80,18 +80,33 @@ class wingid (
             ensure => directory,
             owner => 'www-data',
             group => 'www-data';
+
         $media_path:
             ensure => directory,
             owner => 'www-data',
             group => 'www-data';
+
+        $site_root:
+            ensure => directory,
+            mode => 'g+rwx',
+            group => 'www-data';
+
         "${site_root}/${site_name}/static/":
             ensure => directory;
+
         $static_admin_path:
             ensure => link,
             target => "${venv_path}/lib/python2.7/site-packages/django/contrib/admin/static/admin/";
+
         $static_rest_path:
             ensure => link,
             target => "${venv_path}/lib/python2.7/site-packages/rest_framework/static/rest_framework/";
+
+        "${site_root}/db.sqlite3":
+            require => Exec['wingid_migrate'],
+            ensure => file,
+            mode => 'g+rw',
+            group => 'www-data';
     }
 
     # Install Python and friends.
