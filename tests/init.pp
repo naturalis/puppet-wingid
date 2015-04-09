@@ -4,4 +4,5 @@ class {'wingid':
     site_root => '/opt/wingid/django',
     site_name => 'mysite',
     venv_path => '/opt/wingid/django/env',
+    cran_mirror => 'http://cran.sciserv.eu',
 }

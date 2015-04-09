@@ -56,9 +56,18 @@ class wingid::cran (
 
     # Install R packages from CRAN.
     r::package {
-        'rgl': require => [Package['r-base'], Package['build-essential']];
-        'mass': require => [Package['r-base'], Package['build-essential']];
-        'geomorph': require => [Package['r-base'], Package['build-essential']];
+        'rgl':
+            repo => $mirror,
+            dependencies => true,
+            require => [Package['r-base'], Package['build-essential']];
+        'mass':
+            repo => $mirror,
+            dependencies => true,
+            require => [Package['r-base'], Package['build-essential']];
+        'geomorph':
+            repo => $mirror,
+            dependencies => true,
+            require => [Package['r-base'], Package['build-essential']];
     }
 
 }

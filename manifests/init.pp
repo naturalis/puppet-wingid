@@ -26,6 +26,7 @@
 #     site_root => '/opt/wingid/django',
 #     site_name => 'mysite',
 #     venv_path => '/opt/wingid/django/env',
+#     cran_mirror => 'http://cran.sciserv.eu',
 #   }
 #
 class wingid (
@@ -34,6 +35,7 @@ class wingid (
         $site_root,
         $site_name,
         $venv_path,
+        $cran_mirror = 'http://cran.r-project.org',
     ) {
 
     # Construct paths.
@@ -44,7 +46,7 @@ class wingid (
 
     # R >= 3.1.0 is required, so install it from CRAN.
     class { 'wingid::cran':
-        mirror => 'http://cran-mirror.cs.uu.nl',
+        mirror => $cran_mirror,
     }
 
     # Install packages.
