@@ -36,8 +36,10 @@ class wingid (
         $venv_path,
     ) {
 
-    package { 'python-numpy':
-        ensure => present,
+    package {
+        'python-numpy': ensure => present;
+        'python-pil': ensure => present;
+        'python-memcache': ensure => present;
     }
 
     # Install Python and friends.
@@ -62,6 +64,7 @@ class wingid (
     # Install and configure Apache.
     class { 'apache':
         package_ensure => present,
+        default_vhost => false,
         default_mods => true,
         default_confd_files => true,
         purge_configs => true,
