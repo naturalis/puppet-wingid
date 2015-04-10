@@ -176,14 +176,11 @@ class wingid (
             { alias => '/static/admin/', path => $static_admin_path },
             { alias => '/static/rest_framework/', path => $static_rest_path },
             { alias => '/static/', path => $static_path },
+            { alias => '/docs/', path => "${doc_root}/docs" },
         ],
         directories => [
             {
                 'path'     => $doc_root,
-                'provider' => 'directory',
-            },
-            {
-                'path'     => "${doc_root}/docs",
                 'provider' => 'directory',
             },
             {
