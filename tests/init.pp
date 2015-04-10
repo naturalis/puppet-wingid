@@ -6,3 +6,8 @@ class { 'wingid' :
     venv_path => '/opt/wingid/django/env',
     cran_mirror => 'http://cran.sciserv.eu',
 }
+
+class { 'wingid::docs' :
+    sourcedir => '/opt/wingid/docs',
+    outdir => '/var/www/wingid/docs',
+}
