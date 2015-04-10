@@ -45,6 +45,10 @@ class wingid (
         $cran_mirror = 'http://cran.r-project.org',
     ) {
 
+    class { 'apt':
+        always_apt_update => true,
+    }
+
     # Construct paths.
     $media_path = "${site_root}/media/"
     $static_admin_path = "${site_root}/${site_name}/static/admin/"
@@ -74,6 +78,12 @@ class wingid (
             default_mods        => true,
             default_confd_files => true,
             purge_configs       => true;
+    }
+
+    # Ubuntu 14.04 comes with outdated versions of these packages. They will be
+    # downloaded and compiled while setting up the Python virtualenv.
+    apt::builddep {
+        'python-sorl-thumbnail':;
     }
 
     # Install packages.
@@ -139,6 +149,7 @@ class wingid (
     # Setup the Python virtualenv for WingID.
     python::virtualenv { $venv_path :
         require      => [
+            Apt::Builddep['python-sorl-thumbnail'],
             Class['wingid::cran'],
             Package['python-numpy'],
             Package['python-pil'],

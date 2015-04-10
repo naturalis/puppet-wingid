@@ -22,8 +22,6 @@ class wingid::cran (
         $mirror = 'http://cran.r-project.org',
     ) {
 
-    include apt
-
     # Add the CRAN Apt source to /etc/apt/sources.list.d/
     apt::source { "cran":
         location          => "${mirror}/bin/linux/ubuntu",
