@@ -1,7 +1,7 @@
 # Puppet WingID module
 
 This is the [Puppet][1] module for [WingID][2]. This module configures an Ubuntu
-server for serving WingID.
+server for WingID.
 
 ## Requirements
 
@@ -28,12 +28,12 @@ settings in `django/website/settings.py`:
     TEMPLATE_DEBUG = False
     ALLOWED_HOSTS = ['wingid.example.com']
 
-## Install
+## Installation
 
 To install this Puppet module, clone this repository in `/etc/puppet/modules/`
 and rename the directory to "wingid" (i.e. `mv puppet-wingid wingid`).
 
-## How to use
+## Usage
 
 Put the following code in a Puppet manifest (e.g. `wingid.pp` or `site.pp`):
 
