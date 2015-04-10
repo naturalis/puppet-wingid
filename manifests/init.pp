@@ -49,7 +49,7 @@ class wingid (
         always_apt_update => true,
     }
 
-    # Construct paths.
+    # Construct paths (must have trailing spaces).
     $media_path = "${site_root}/media/"
     $static_admin_path = "${site_root}/${site_name}/static/admin/"
     $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
@@ -176,7 +176,7 @@ class wingid (
             { alias => '/static/admin/', path => $static_admin_path },
             { alias => '/static/rest_framework/', path => $static_rest_path },
             { alias => '/static/', path => $static_path },
-            { alias => '/docs/', path => "${doc_root}/docs" },
+            { alias => '/docs/', path => "${doc_root}/docs/" },
         ],
         directories => [
             {
