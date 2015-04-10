@@ -28,7 +28,7 @@
 # == Sample Usage:
 #
 #   class {'wingid':
-#     domain => 'wing-id.naturalis.nl',
+#     domain => 'wingid.example.com',
 #     doc_root => '/var/www/wingid',
 #     site_root => '/opt/wingid/django',
 #     site_name => 'mysite',
@@ -37,7 +37,7 @@
 #   }
 #
 class wingid (
-        $domain = 'wing-id.naturalis.nl',
+        $domain = 'wingid.example.com',
         $doc_root = '/var/www/wingid',
         $site_root,
         $site_name,

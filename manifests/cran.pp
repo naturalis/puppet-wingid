@@ -15,7 +15,7 @@
 # == Sample Usage:
 #
 #   class {'wingid::cran':
-#     mirror => 'http://cran-mirror.cs.uu.nl',
+#     mirror => 'http://cran.sciserv.eu',
 #   }
 #
 class wingid::cran (
