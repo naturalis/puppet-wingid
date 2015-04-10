@@ -183,6 +183,10 @@ class wingid (
                 'provider' => 'directory',
             },
             {
+                'path'     => "${doc_root}/docs",
+                'provider' => 'directory',
+            },
+            {
                 'path'     => $media_path,
                 'provider' => 'directory',
             },
