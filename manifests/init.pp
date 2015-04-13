@@ -24,6 +24,7 @@
 # - puppetlabs-apt
 # - puppetlabs-apache
 # - stankevich-python
+# - forward3ddev-r
 #
 # == Sample Usage:
 #
@@ -55,8 +56,12 @@ class wingid (
         apt_update_frequency => always,
     }
 
+    # Run apt-get update.
+    include apt::update
+
     # Enable unattended upgrades.
     class { 'apt::unattended_upgrades': }
+
 
     class {
         # Geomorph requires R >= 3.1.0; install R and the geomorph package from
