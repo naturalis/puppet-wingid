@@ -28,18 +28,26 @@ class wingid::docs (
             ensure => present;
     }
 
-    exec {
-        'wingid_make_docs':
-            require => [
-                Package['python-sphinx'],
-                File[$outdir],
-            ],
-            command => "/usr/bin/sphinx-build -b html ${sourcedir} ${outdir}",
-            cwd     => $sourcedir;
+    python::pip {
+        'sphinx_rtd_theme':
+            pkgname     => 'sphinx_rtd_theme',
+            ensure      => present,
     }
 
     file {
         $outdir:
             ensure => directory;
     }
+
+    exec {
+        'wingid_make_docs':
+            require => [
+                Package['python-sphinx'],
+                Python::Pip['sphinx_rtd_theme'],
+                File[$outdir],
+            ],
+            command => "/usr/bin/sphinx-build -b html ${sourcedir} ${outdir}",
+            cwd     => $sourcedir;
+    }
+
 }
