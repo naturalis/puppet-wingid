@@ -56,9 +56,6 @@ class wingid (
         apt_update_frequency => always,
     }
 
-    # Run apt-get update.
-    include apt::update
-
     # Enable unattended upgrades.
     class { 'apt::unattended_upgrades': }
 
@@ -71,6 +68,7 @@ class wingid (
 
         # Install Python and friends.
         'python':
+            require    => Exec['apt_update'],
             version    => 'system',
             pip        => true,
             dev        => true,
@@ -79,6 +77,7 @@ class wingid (
 
         # Install Apache.
         'apache':
+            require             => Exec['apt_update'],
             package_ensure      => present,
             default_vhost       => false,
             default_mods        => true,
@@ -95,12 +94,16 @@ class wingid (
     # Install packages.
     package {
         'python-numpy':
+            require => Exec['apt_update'],
             ensure => present;
         'python-pil':
+            require => Exec['apt_update'],
             ensure => present;
         'memcached':
+            require => Exec['apt_update'],
             ensure => present;
         'python-memcache':
+            require => Exec['apt_update'],
             ensure => present;
     }
 
