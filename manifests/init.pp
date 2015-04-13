@@ -45,15 +45,18 @@ class wingid (
         $cran_mirror = 'http://cran.r-project.org',
     ) {
 
-    class { 'apt':
-        always_apt_update => true,
-    }
-
     # Construct paths (must have trailing spaces).
     $media_path = "${site_root}/media/"
     $static_admin_path = "${site_root}/${site_name}/static/admin/"
     $static_rest_path = "${site_root}/${site_name}/static/rest_framework/"
     $static_path = "${site_root}/wingid/static/"
+
+    class { 'apt':
+        apt_update_frequency => always,
+    }
+
+    # Enable unattended upgrades.
+    class { 'apt::unattended_upgrades': }
 
     class {
         # Geomorph requires R >= 3.1.0; install R and the geomorph package from
@@ -63,7 +66,6 @@ class wingid (
 
         # Install Python and friends.
         'python':
-            require    => Exec['apt_update'],
             version    => 'system',
             pip        => true,
             dev        => true,
@@ -72,7 +74,6 @@ class wingid (
 
         # Install Apache.
         'apache':
-            require             => Exec['apt_update'],
             package_ensure      => present,
             default_vhost       => false,
             default_mods        => true,
@@ -89,16 +90,12 @@ class wingid (
     # Install packages.
     package {
         'python-numpy':
-            require => Exec['apt_update'],
             ensure => present;
         'python-pil':
-            require => Exec['apt_update'],
             ensure => present;
         'memcached':
-            require => Exec['apt_update'],
             ensure => present;
         'python-memcache':
-            require => Exec['apt_update'],
             ensure => present;
     }
 
